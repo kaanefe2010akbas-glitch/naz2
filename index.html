@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bizim Hikâyemiz</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Quicksand:wght@400;500;600;700&display=swap');
+
+    :root {
+      --beige: #eee1ce;
+      --cream: #fffaf1;
+      --brown: #5b4637;
+      --soft-brown: #8b715d;
+      --line: rgba(91, 70, 55, .15);
+      --shadow: 0 15px 40px rgba(91, 70, 55, .10);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--beige);
+      color: var(--brown);
+      font-family: 'Quicksand', sans-serif;
+      overflow-x: hidden;
+    }
+
+    body::before,
+    body::after {
+      content: '✦';
+      position: fixed;
+      font-size: 25px;
+      color: rgba(91, 70, 55, .18);
+      pointer-events: none;
+      z-index: 0;
+      animation: float 5s ease-in-out infinite;
+    }
+
+    body::before { left: 4%; top: 12%; }
+    body::after { right: 5%; bottom: 12%; animation-delay: 1.8s; }
+
+    .container {
+      width: min(940px, 92%);
+      margin: auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero {
+      min-height: 86vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 70px 0 40px;
+    }
+
+    .hero-card {
+      width: min(760px, 100%);
+      background: rgba(255,250,241,.82);
+      border: 1px solid rgba(91,70,55,.10);
+      border-radius: 34px;
+      padding: 65px 35px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(5px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::before,
+    .hero-card::after {
+      content: '♡';
+      position: absolute;
+      font-size: 70px;
+      color: rgba(139,113,93,.12);
+    }
+    .hero-card::before { top: -8px; left: 24px; transform: rotate(-12deg); }
+    .hero-card::after { bottom: -18px; right: 28px; transform: rotate(10deg); }
+
+    .mini {
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--soft-brown);
+      margin-bottom: 16px;
+    }
+
+    h1, h2 {
+      font-family: 'DM Serif Display', serif;
+      font-weight: 400;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: clamp(44px, 8vw, 76px);
+      line-height: 1.02;
+    }
+
+    .hero p {
+      max-width: 600px;
+      margin: 24px auto 0;
+      font-size: 16px;
+      line-height: 1.9;
+      color: #705b4b;
+    }
+
+    .heart-line {
+      margin: 30px auto 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      justify-content: center;
+      color: var(--soft-brown);
+    }
+    .heart-line span { width: 65px; height: 1px; background: var(--line); }
+
+    section { padding: 55px 0; }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 26px;
+    }
+    .section-title .mini { margin-bottom: 8px; }
+    .section-title h2 { font-size: 42px; }
+
+    /* UZUN METİN */
+    .letter {
+      background: var(--cream);
+      border-radius: 28px;
+      padding: clamp(28px, 5vw, 55px);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(91,70,55,.08);
+      position: relative;
+    }
+
+    .letter::before {
+      content: '';
+      position: absolute;
+      top: 18px;
+      right: 20px;
+      width: 42px;
+      height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+    }
+
+    .editable-text {
+      font-size: 16px;
+      line-height: 2;
+      white-space: pre-line;
+      outline: none;
+      min-height: 350px;
+    }
+
+    .hint {
+      font-size: 12px;
+      color: #987e69;
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    /* KARE KARTLAR */
+    .square-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+    }
+
+    .square-card {
+      aspect-ratio: 1 / 1;
+      background: var(--cream);
+      border: 1px solid rgba(91,70,55,.08);
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+    .square-card:hover {
+      transform: translateY(-6px) rotate(-1deg);
+      box-shadow: 0 20px 45px rgba(91,70,55,.15);
+    }
+
+    .square-card::before {
+      content: '✿';
+      position: absolute;
+      top: 12px;
+      left: 17px;
+      opacity: .18;
+      font-size: 25px;
+    }
+
+    .square-card h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 26px;
+      font-weight: 400;
+      margin-bottom: 9px;
+    }
+
+    .square-card p {
+      margin: 0;
+      line-height: 1.65;
+      font-size: 14px;
+      color: #7e6654;
+    }
+
+    /* ŞİİR */
+    .poem-card {
+      max-width: 680px;
+      margin: auto;
+      background: var(--cream);
+      border-radius: 28px;
+      padding: clamp(32px, 6vw, 60px);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(91,70,55,.08);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .poem-card::before,
+    .poem-card::after {
+      content: '✿';
+      position: absolute;
+      font-size: 34px;
+      color: rgba(139,113,93,.16);
+    }
+    .poem-card::before { top: 18px; left: 22px; transform: rotate(-12deg); }
+    .poem-card::after { bottom: 18px; right: 22px; transform: rotate(12deg); }
+
+    .poem-text {
+      min-height: 280px;
+      outline: none;
+      white-space: pre-line;
+      line-height: 2.05;
+      font-family: 'DM Serif Display', serif;
+      font-size: 20px;
+      color: #695143;
+    }
+
+    .poem-hint {
+      margin-top: 22px;
+      font-size: 12px;
+      color: #987e69;
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    /* ALT BÖLÜM */
+    .ending {
+      text-align: center;
+      padding: 80px 0 100px;
+    }
+
+    .ending-card {
+      background: rgba(255,250,241,.72);
+      border: 1px solid var(--line);
+      border-radius: 30px;
+      padding: 45px 25px;
+      box-shadow: var(--shadow);
+    }
+
+    .ending-card h2 { font-size: 48px; }
+    .ending-card p { color: #7e6654; line-height: 1.8; }
+
+    .footer { text-align: center; padding: 0 0 25px; font-size: 12px; color: #8e7764; }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(6deg); }
+    }
+
+    @media (max-width: 720px) {
+      .square-grid { grid-template-columns: 1fr; }
+      .square-card { aspect-ratio: auto; min-height: 190px; }
+      .photo-grid { grid-template-columns: 1fr; }
+      .photo-grid .wide { grid-row: auto; }
+      .photo-grid .wide img, .photo img, .photo.small img { height: 280px; }
+      .hero { min-height: 75vh; }
+      .hero-card { padding: 50px 22px; }
+    }
+ .photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 30px;
+}
+
+.photo {
+  background: var(--cream);
+  padding: 10px;
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.photo img {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  display: block;
+  border-radius: 18px;
+}
+
+@media (max-width: 720px) {
+  .photo-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .photo img {
+    height: 300px;
+  }
+} </style>
+</head>
+<body>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <div class="hero-card">
+          <div class="mini">sana ait küçük bir dünya</div>
+          <h1>Bizim Hikâyemiz</h1>
+          <p>
+            HAYATIMIN ANLAMINA
+          </p>
+          <div class="heart-line"><span></span> ♡ <span></span></div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-title">
+          <div class="mini">uzun metin bölümü</div>
+          <h2>İçimden Gelenler</h2>
+        </div>
+
+        <div class="letter">
+          <div class="editable-text" contenteditable="true">
+güzelim anlıyorum seni çok zor herşey ama geçicek biliyon bugün kavuşmayacağımızı bile bile geldim tek duymak istediğim şey seni seviyorum lafıydı ve onu dedin ve ben çok mutlu oldum cumada sana çok dua ettim sen bana rabbimin hediyesi ve emanetisin ben çok geç anladım bunları özür dilerim
+
+sana baktıkça rabbimin lütuflarını görüyorum merhametini aşkını kusursuz yaratışını sen herşeyimsin zor battın biliyorum bende battım son 3 aydır belki senin kadar değil ama battım ama tek çıkıs yolum allah oldu namaz değil ondan geldiğini iman ettim herşeyin ve allahın bana zarar vermiyceğini biliyorum
+
+tek çıkış bu sende biliyon güzelim ben her zaman yanındayım sıkıştığında gel rüzgar konusuda bebeğim benim su olayı işte  9 yıllık arkadaşım sattı ama gitmesi ikimiz içinder iyi oldu ve boşver etmese etmesin hakkını sen iyi birisi hele bide rüzgarla sercana sen kendini suçlama gelirse barışmak senin elinde ben
+
+sevmiyorum biliyosun ikisinide neyse ben seni çokkk seviyom yaaa deli kız ya beklerim sonuçta biz ruhlarımızaa aşığızzz bebiş ne yaşarsan yaşa hep mutlu ol güzelim hepsi geçici ve sana söz sana yaşayamadığın çocukluğunu yaşatçam beni çokkk değiştirdin sorumluluk aldım düzeltim her şeyi güvenmiyosun biliyom ama 
+
+zamanla görcen ve söyleyemiyceğim şeyler yaptım doğru olan zamanı gelince öğrencen bu sitede arada yazıları değiştirirm şiir baya ekliycem haberin olsun aktif olacak bir site olcak dikkat et yakalanma anneni kırma ve korkma korktuğun herşeyi yaşarsın benim gibi hem şimdi aynı hastalığa sahibizzz ritim bozukluğu 
+
+çıktııııı sevgilimle aynı hastalığı taşımak çok gurur verici he diycen ne saçmalıyon delirdim mutluluktan beni seviyosun yaa deli etti ve hiç üzgün değilim hastalık çıktığından sana yaptıklaırmın cezasını çektim özür dilerim anldım her konudan seni bu süreçte neyseee moral bozmakk yokkk çünküüüü seviyosunnn beniii
+
+çingenem benimm kurban olduğum herşeyim seni çokkk seviyorum ve herşeyden değerlisin evimsin hem seni sokağından son ses kırmızı sarı meşalerle almaya gelcem merak etme 18 de değil 24 25 te sen ne zaman dersen ama alcam öyle seni bende siyah jilet gibi bir takım sende kırmızı bir elbise ayy hayali bile güzel 
+
+herşey sen için ama gerektiği yerde benden vazgeçebilirsin anlarım bu çocuk biraz yordu seni hakkın var şimdi bana gelip yok sen vazgeçebilirsin beklemek zorunda değilsin deme evet kız düşkünüydüm taki senşi görene kadar bebiş ve ben senle yaşamak istiyorum herşeyi ayazla yaptığımız çoğu şeyi senle yapmak isterdim
+
+veeeee spirderman filmine git o dönemde oturdum ağladım filmde senle beni anlattı kız yani mj spidermane seni sevmiyorum diyo ama spiderman ı love you diyodu o zmaanlarda bana seni istemiyom demiştin vee sen benii üzmedin sadece korktun beklemek acıtmıyo canımı veeeeeeeee sen çok feci cadısın o sözler neydi yemin
+
+ediyorum bi an cidden vazgeçtin sandım amaaa gitmedinnnn artık bunu biliyorum ya istersen başka yere taşın herşeyini değiştir bulurum senii çünkü sen benim minakk bebeğimsin kalbime sokucam seni daha makine icat edip küçültçem sokucam kalbime orda yaşa hihihihihii egoda karşılaşırsak net gelirim hiç itiraz etme  
+
+bekliycem hergün amaa bu sene 3 gün 4.20 de çıkıcaz o sıkıntı neyseee seni çokkk özledim yavrummm ayyy çokk boş yaptım inşallah kalbine ufacıkta olsa iyi gelmişimdir çabalıyorum senin için belkide iyi gelenmedim bilmiyom merak etme okul zamanında karşılaşırsak engel olurum hem sana hem kendime sevgili olmıycaz net
+
+arkadaşız ama gönülde sevgiliiiiiiii neyseee çok şişirdim kafanı uykunu düzene sok döverim vallaha sonra iyi beslen yataklara düşme yemek yapıp getiremem derse çok yüklenme yorma  kendini kıyamam sana yemin ederim ve haberin olsun sabah koşusuna çıkıyom akşamda genelde akşam 7 7.30 gibi s16 ya geliyom haberin olsun 
+
+ve priwe kimi alıp duruyon biri çıkıyo biri giriyo biliyom cevap veremiycen riskede atma kendini sadece priwini düzene al aaaa öyle olmaazzzz neyse ya gittim hadi aşağı kaydır tam senlik şeyler var: YAZAN ŞAİR İCARDİİİİİ
+          </div>
+          <div class="hint">Bu kutuya tıklayıp metni doğrudan değiştirebilirsin.</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+    <section>
+      <div class="container">
+        <div class="section-title">
+          <div class="mini">sana özel</div>
+          <h2>Bir Şiir</h2>
+        </div>
+
+        <div class="poem-card">
+          <div class="poem-text" contenteditable="true">
+Önce sesin gelir aklıma
+Çaresiz kaldıkça hep seni düşünürüm
+Güzel olan, dolgun başaklardaki sarışın sevinçli
+Sonra cumartesi günleri gelir
+Sonra gökyüzü gelir hemen kurtulurum
+Bir yağmur yağsa da, beraber ıslansak.
+
+Kırk kere söyledim bir daha söylerim
+Savaşta ve barışta, karada ve denizde,
+Düşkünlükte ve esenlikte
+Zamanımız apayrı bize göre
+Yanyana olduk mu elele
+Aç kalsak ağlamayız biliyorum.
+
+İçim güvercinleri okşamış gibi rahat
+Sen yanımdayken ister istemez
+Geniş meydanlarda akşam üstleri
+Üstüste üç kere deniz, üç kere çınarlar.
+
+Sen yanımdayken ister istemez
+Uzak ırmakları hatırlıyorum.
+
+Arasıra düşmüyor değil aklıma
+Yabancı kadınların sıcaklığı
+Ama Allah bilir ya, ne saklıyayım
+Yanında ihtiyarlamak istiyorum...
+Satır aralarını ve boşlukları koruyarak
+şiirini istediğin uzunlukta yazabilirsin.</div>
+          <div class="poem-hint">Şiir alanına tıklayıp doğrudan değiştirebilirsin.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ending">
+      <div class="container">
+        <div class="ending-card">
+          <div class="mini">son sayfa</div>
+          <h2>Ve daha anlatılacak çok şey var…</h2>
+          <p>biz seninle her evrende bütün ihtimallerde,bırakıp gitmek bizi bozar BÖRÜ.
+          <div class="heart-line"><span></span> ✦ ♡ ✦ <span></span></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="footer">♡ küçük detaylarla hazırlanmıştır</div>
+
+</body>
+</html>
